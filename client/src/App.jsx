@@ -13,6 +13,8 @@ function App() {
   const [chatHistory, setChatHistory] = useState([]);
   const [originalPrompt, setOriginalPrompt] = useState("");
 
+  setOriginalPrompt
+
   useEffect(() => {
     if (!onUse) return;
     setOnUse(false);
@@ -21,9 +23,17 @@ function App() {
       The user just answered: ${textValue} give your next reply`
     };
     setChatHistory(prevChatHistory => [...prevChatHistory, textValue]);
-    const fetchData = () => {
-      const data = { output: "Hello World!"}
-      setChatHistory(prevChatHistory => [...prevChatHistory, "Model :" + JSON.stringify(data.output)]);
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:3000/", {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ input: prompt })
+      });
+      const data = await response.json();
+      console.log(data);
+      setChatHistory(prevChatHistory => [...prevChatHistory, "Model: " + data.output]);
     }
     fetchData();
   }, [onUse]);
