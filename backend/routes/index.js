@@ -8,6 +8,14 @@ const ai = new genai.GoogleGenAI({ apiKey: process.env.API_KEY });
 router.post('/', async (req, res) => {
   userInput = req.body.input;
 
+  if (!userInput) {
+    return res.status(400).json({ error: "No user input" });
+  }
+
+  if (!userInput.content) {
+    return res.status(400).json({ error: "No content in user input" });
+  }
+
   try {
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash", 
