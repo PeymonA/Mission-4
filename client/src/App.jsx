@@ -11,20 +11,17 @@ function App() {
 
   //Data
   const [chatHistory, setChatHistory] = useState([]);
-  const [originalPrompt, setOriginalPrompt] = useState("");
-
-  setOriginalPrompt
 
   useEffect(() => {
     if (!onUse) return;
     setOnUse(false);
     const prompt = {
-      content: `Here is the chat history so far: ${originalPrompt} ${chatHistory.toString()}
+      content: `Here is the chat history so far: ${chatHistory.toString()}
       The user just answered: ${textValue} give your next reply`
     };
     setChatHistory(prevChatHistory => [...prevChatHistory, textValue]);
     const fetchData = async () => {
-      const response = await fetch("http://localhost:3000/", {
+      const response = await fetch("http://localhost:80/", {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
@@ -41,7 +38,7 @@ function App() {
   return (
     <>
       <div className='section'>
-        <h1>AI Mock Interviewer Text</h1>
+        <h1>Tina</h1>
         <div className='sectionChild'>
           <ChatLog chat={chatHistory} />
         </div>

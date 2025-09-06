@@ -1,0 +1,15 @@
+# 1. Build the app
+FROM node:alpine AS build
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
+ 
+# 2. Setup the server to serve the app
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+
+# docker build -t demo-react-app:v0.3 .
+# docker run -p 9000:80 demo-react-app:v0.3
