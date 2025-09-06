@@ -9,8 +9,9 @@ function App() {
   const [textValue, setTextValue] = useState('');
   const [onUse, setOnUse] = useState(false);
 
+  const firstMessage = "I’m Tina. I help you to choose right insurance policy. May I ask you a few personal questions to make sure I recommend the best policy for you?";
   //Data
-  const [chatHistory, setChatHistory] = useState([]);
+  const [chatHistory, setChatHistory] = useState(["Model: " + firstMessage]);
 
   useEffect(() => {
     if (!onUse) return;
@@ -21,7 +22,7 @@ function App() {
     };
     setChatHistory(prevChatHistory => [...prevChatHistory, textValue]);
     const fetchData = async () => {
-      const response = await fetch("http://localhost:80/", {
+      const response = await fetch("http://localhost:3000/", {
         method: 'POST',
         headers: {
           "Content-Type": "application/json"
