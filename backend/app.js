@@ -9,6 +9,7 @@ var cors = require('cors');
 dotenv.config();
 
 var indexRouter = require('./routes/index');
+var liveRouter = require('./routes/live');
 
 var app = express();
 
@@ -25,6 +26,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
+app.use('/live', liveRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

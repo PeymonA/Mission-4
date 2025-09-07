@@ -3,6 +3,7 @@ import './App.css'
 
 import MyTextInput from './components/TextInput.jsx'
 import ChatLog from './components/ChatLog.jsx'
+import SimpleRecordButton from './components/RecordButton.jsx';
 
 function App() {
   //Text Input from user
@@ -45,6 +46,9 @@ function App() {
         </div>
         <div className='sectionChild'>
           <MyTextInput setTextValue={setTextValue} setOnUse={setOnUse} />
+        </div>
+        <div className='sectionChild'>
+          <SimpleRecordButton />
         </div>
       </div>
     </>
