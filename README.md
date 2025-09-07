@@ -5,7 +5,9 @@
 <p> React (Vite) </p>
 <p> Node.js (Express) </p>
 <h2> Getting Started </h2>
-<p> ... </p>
+<p> Download and install Docker desktop and have it running </p>
+<h2> Installation </h2>
+<p> From project root - docker compose up --build </p>
 <h2> Acknowledgements </h2>
 <p> Sebin </p>
 <p> https://www.youtube.com/watch?v=pTFZFxd4hOI </p>
