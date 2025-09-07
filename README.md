@@ -1,12 +1,12 @@
 # M4
-# About The Project
+<h2> About The Project </h2>
 <p> This is an application that chats with a user and then recommends the most suitable insurance policy based on the attributes of the users. </p>
-# Built With
+<h2> Built With </h2>
 <p> React (Vite) </p>
 <p> Node.js (Express) </p>
-# Getting Started
+<h2> Getting Started </h2>
 <p> ... </p>
-# Acknowledgements
+<h2> Acknowledgements </h2>
 <p> Sebin </p>
 <p> https://www.youtube.com/watch?v=pTFZFxd4hOI </p>
 <p> https://cassidoo.co/post/react-microphone/</p>
