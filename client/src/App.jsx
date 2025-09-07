@@ -21,7 +21,7 @@ function App() {
       content: `Here is the chat history so far: ${chatHistory.toString()}
       The user just answered: ${textValue} give your next reply`
     };
-    setChatHistory(prevChatHistory => [...prevChatHistory, textValue]);
+    setChatHistory(prevChatHistory => [...prevChatHistory, "User: " + textValue]);
     const fetchData = async () => {
       const response = await fetch("http://localhost:3000/", {
         method: 'POST',
@@ -39,16 +39,18 @@ function App() {
 
   return (
     <>
-      <div className='section'>
-        <h1>Tina</h1>
-        <div className='sectionChild'>
-          <ChatLog chat={chatHistory} />
-        </div>
-        <div className='sectionChild'>
-          <MyTextInput setTextValue={setTextValue} setOnUse={setOnUse} />
-        </div>
-        <div className='sectionChild'>
-          <SimpleRecordButton />
+      <div className="chatBot">
+        <header>
+          <h2>Tina</h2>
+        </header>
+        <ChatLog chat={chatHistory} />
+        <div className='chat-parent'>
+          <div className="chat-input">
+            <MyTextInput setTextValue={setTextValue} setOnUse={setOnUse} />
+          </div>
+          <div> 
+            <SimpleRecordButton />
+          </div>
         </div>
       </div>
     </>

@@ -3,13 +3,13 @@ import '../App.css'
 function ChatLog(props) {
 
   return (
-    <div className="chat-log">
+    <ul className="chatbox">
       {props.chat.map((message, index) => (
-        <div key={index} className="chat-message">
-          {message}
-        </div>
+        <li class="chat-incoming chat">
+          <p>{message}</p>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import '../App.css'
 
 function SimpleRecordButton() {
 	const [isRecording, setIsRecording] = useState(false);
@@ -100,7 +101,7 @@ function SimpleRecordButton() {
     };
 
 	return (
-		<div> 
+		<div className='chat-parent'> 
 			<button
 				onClick={handleToggleRecording}
 				className={`bg-red-400 hover:opacity-80 text-white font-bold py-2 px-4 rounded`}

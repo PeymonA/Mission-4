@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import '../App.css'
 
 function MyTextInput(props) {
     const [inputValue, setInputValue] = useState(''); // Initialize state for the input value
@@ -18,12 +19,9 @@ function MyTextInput(props) {
             onChange={handleChange} // Handle changes with the handleChange function
             placeholder="Enter text here..."
         />
-        <input
-            type="button"
-            value="Click Me"
-            onClick={handleClick}
-        />
-        
+        <button onClick={handleClick}>
+            Send
+        </button>
     </div>
     );
 }
