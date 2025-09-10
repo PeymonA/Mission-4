@@ -32,20 +32,6 @@ router.post('/', upload.single('audio'), async (req, res) =>  {
         return res.status(400).send("No file uploaded.");
     } 
 
-    const wavfile =  `${Date.now()}.wav`
-
-    // Choose where to save
-    const uploadPath = path.join(__dirname, "../uploads", wavfile);
-
-    fs.writeFile(uploadPath, file.buffer, (err) => {
-        if (err) {
-        console.error(err);
-        return res.status(500).send("Error saving file.");
-        }
-        res.send({ message: "File saved successfully", path: uploadPath });
-    });
-
-    
     const responseQueue = [];
 
     async function waitMessage() {
@@ -94,15 +80,21 @@ router.post('/', upload.single('audio'), async (req, res) =>  {
         config: config,
     });
 
-    // Send Audio Chunk
-    const fileBuffer = fs.readFileSync(`./uploads/${wavfile}`);
-
     // Ensure audio conforms to API requirements (16-bit PCM, 16kHz, mono)
-    const wav = new WaveFile();
-    wav.fromBuffer(fileBuffer);
-    wav.toSampleRate(16000);
-    wav.toBitDepth("16");
-    const base64Audio = wav.toBase64();
+    try {
+        // Work with file.buffer directly
+        const wav = new pkg.WaveFile();
+        wav.fromBuffer(file.buffer);
+
+        // Convert to required format
+        wav.toSampleRate(16000);
+        wav.toBitDepth("16");
+
+        const base64Audio = wav.toBase64();
+    } catch (err) {
+        console.error("Error processing wav:", err);
+        return res.status(500).send("Invalid or corrupted wav file.");
+    }
 
     // If already in correct format, you can use this:
     // const fileBuffer = fs.readFileSync("sample.pcm");
