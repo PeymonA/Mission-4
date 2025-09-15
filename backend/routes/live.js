@@ -32,8 +32,11 @@ router.post('/', upload.single('audio'), async (req, res) =>  {
         return res.status(400).send("No file uploaded.");
     } 
 
+    fs.writeFileSync('./uploads/sample.wav', file.buffer);
+
     const responseQueue = [];
 
+    
     async function waitMessage() {
         let done = false;
         let message = undefined;
@@ -81,6 +84,8 @@ router.post('/', upload.single('audio'), async (req, res) =>  {
     });
 
     // Ensure audio conforms to API requirements (16-bit PCM, 16kHz, mono)
+    var base64Audio;
+
     try {
         // Work with file.buffer directly
         const wav = new pkg.WaveFile();
@@ -90,7 +95,7 @@ router.post('/', upload.single('audio'), async (req, res) =>  {
         wav.toSampleRate(16000);
         wav.toBitDepth("16");
 
-        const base64Audio = wav.toBase64();
+        base64Audio = wav.toBase64();
     } catch (err) {
         console.error("Error processing wav:", err);
         return res.status(500).send("Invalid or corrupted wav file.");
@@ -129,6 +134,7 @@ router.post('/', upload.single('audio'), async (req, res) =>  {
     fs.writeFileSync('audio.wav', wf.toBuffer());
 
     session.close();
+    
     
 });
 

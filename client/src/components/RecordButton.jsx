@@ -11,30 +11,28 @@ function SimpleRecordButton() {
 	const RECORDING_MAX_DURATION = 240; // 4 minutes in seconds
 
 	useEffect(() => {
-		if (!audioStream) {
-			navigator.mediaDevices
-				.getUserMedia({ audio: true })
-				.then((stream) => {
+		if (!audioStream) {		
+			async function getAudio() {
+				const constraints = { audio: true, video: false };
+				try {
+					inputAudioContext.resume();
+					const stream = await navigator.mediaDevices.getUserMedia(constraints);
 					setAudioStream(stream);
-					const mediaRecorder = new MediaRecorder(stream);
+					const mediaRecorder = new MediaRecorder(stream, { mimeType: "audio/webm" });
 					setMediaRecorder(mediaRecorder);
-					let audio;
-
-					mediaRecorder.ondataavailable = (event) => {
-						if (event.data.size > 0) {
-							audio = [event.data];
-						}
-					};
-
-					mediaRecorder.onstop = (event) => {
-						const b = new Blob(audio, { type: "audio/wav" });
+					const data = [];
+					mediaRecorder.ondataavailable = e => e.data.size && data.push(e.data);
+					mediaRecorder.onstop = () => {
+						// For 16-bit audio
+						const b = new Blob(data, { type: "audio/webm" });
 						setAudioBlob(b);
-						console.log("audioBlob", b);
 					};
-				})
-				.catch((error) => {
-					console.error("Error accessing microphone:", error);
-				});
+				} catch (err) {
+					console.error(err);
+				}	
+			}
+			
+			getAudio();
 		}
 
 		return () => {
@@ -91,7 +89,7 @@ function SimpleRecordButton() {
         const fetchData = async () => {
         const response = await fetch("http://localhost:3000/live", {
             method: 'POST',
-            body: formData
+            body: formData,
         });
 
         const data = await response
@@ -128,7 +126,7 @@ function SimpleRecordButton() {
 				<>
 					<div>Preview recording before submitting:</div>
 					<audio controls>
-						<source src={URL.createObjectURL(audioBlob)} type="audio/wav" />
+						<source src={URL.createObjectURL(audioBlob)} />
 					</audio>
 					<button onClick={handleClick}>Submit</button>
 				</>
