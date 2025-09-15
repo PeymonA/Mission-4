@@ -3,7 +3,7 @@ var fs = require('fs');
 var pkg = require('wavefile')
 const { WaveFile } = pkg;
 
-const ai = new genai.GoogleGenAI({ apiKey: "AIzaSyCf3s1A49XLizYKXXR2Hvvs_VB_5l35CMk" });
+const ai = new genai.GoogleGenAI({ apiKey: "API_KEY" });
 
 const model = "gemini-2.5-flash-preview-native-audio-dialog"
 
